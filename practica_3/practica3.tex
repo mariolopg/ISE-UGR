@@ -30,9 +30,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % Apartado para la instalación en Ubuntu Server %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Instalación de Zabbix en Ubuntu Server}
-\subsection{Descargar paquetes de Zabbix 5.0}
+\section{Instalación de Zabbix}
+\subsection{Instalación de Zabbix en Ubuntu Server}
+\subsubsection{Descargar paquetes de Zabbix 5.0}
 
     Vamos a descargar los paquetes de Zabbix, para ello entramos en su web oficial, \href{https://www.zabbix.com/download}{Zabbix.com}, y 
     seleccionamos los siguientes parámetros ya que son los que se ajustan a nuestras necesidades.
@@ -60,7 +60,7 @@
         \end{tcolorbox}
 
     \newpage
-    \subsection{Instalar Zabbix}
+    \subsubsection{Instalar Zabbix}
 
     Ya tenemos todos los paquetes descargados y actualizados, por lo tanto, lo siquiente que indica la web es que hay que instalar Zabbix server, frontend
     y agent con el comando \textbf{\emph{apt install}}.
@@ -68,7 +68,7 @@
             \$ sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent
         \end{tcolorbox}
     
-    \subsection{Crear base de datos inicial}
+    \subsubsection{Crear base de datos inicial}
     Antes de crear la base de datos inicial debemos estar seguros de que el sistema está encendido y funcionando. Una vez hechas las comprobaciones previas,
     pasamos a crear la base de datos. Para ello ingresamos en el asistente de mysql.
         \begin{tcolorbox}[colback=black!10, halign=left]
@@ -94,7 +94,7 @@
             \emph{Ingresamos la contraseña (ISE)}
         \end{tcolorbox}
 
-    \subsection{Configurar la base de datos de Zabbix server}
+    \subsubsection{Configurar la base de datos de Zabbix server}
     Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/zabbix\_server.conf}, descomentamos el parámetro \textbf{\emph{DBPassword}} y le asignamos el valor
     \textbf{\emph{ISE}}:
     \begin{figure}[H]
@@ -104,7 +104,7 @@
         \label{fig:zabbix_conf}
     \end{figure}
 
-    \subsection{Configurar el PHP del frontend de Zabbix}
+    \subsubsection{Configurar el PHP del frontend de Zabbix}
     Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/apache.conf}y modificamos el parámetro comentado \textbf{\emph{php\_value date.timezone}} reemplazando Riga
     por Madrid para que se muestre la hora de forma correcta.
     \begin{figure}[H]
@@ -114,7 +114,7 @@
         \label{fig:apache_conf}
     \end{figure}
 
-    \subsection{Configurar los servicios}
+    \subsubsection{Configurar los servicios}
     Reiniciamos los servicios \textbf{\emph{zabbix-server}}, \textbf{\emph{zabbix-agent}} y \textbf{\emph{apache2}} para que se actualicen los cambios realizados.
         \begin{tcolorbox}[colback=black!10, halign=left]
             \$ sudo systemctl restart zabbix-server zabbix-agent apache2
@@ -125,13 +125,13 @@
             \$ sudo systemctl enable zabbix-server zabbix-agent apache2
         \end{tcolorbox}
 
-    \subsection{Habilitar el puerto de escucha}
+    \subsubsection{Habilitar el puerto de escucha}
     Habilitamos el puerto de escucha que usa por defecto Zabbix para que el firewall no lo bloquee.
         \begin{tcolorbox}[colback=black!10, halign=left]
             \$ sudo ufw allow 10051/tcp
         \end{tcolorbox}
 
-    \subsection{Habilitar el puerto de escucha}
+    \subsubsection{Habilitar el puerto de escucha}
     Editamos el fichero \textbf{/etc/zabbix/zabbix\_agentd.conf} cambiando las IP asignadas a las variables Server y ServerActive por la IP de la máquina que actuará de servidor
     \textbf{(192.168.56.105)} y reiniciamos el servicio \textbf{\emph{zabbix-agent}} para que se apliquen los cambios.
         \begin{figure}[H]
@@ -148,8 +148,8 @@
 % Apartado para la instalación en CentOS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \newpage
-\section{Instalación de Zabbix en CentOS}
-    \subsection{Descargar paquetes de Zabbix 5.0}
+\subsection{Instalación de Zabbix en CentOS}
+    \subsubsection{Descargar paquetes de Zabbix 5.0}
     Vamos a descargar los paquetes de Zabbix, para ello entramos en su web oficial, \href{https://www.zabbix.com/download}{Zabbix.com}, y 
     seleccionamos los siguientes parámetros ya que son los que se ajustan a nuestras necesidades.
     \begin{figure}[H]
@@ -174,7 +174,7 @@
             \# dnf install zabbix-server-mysql zabbix-web-mysql zabbix-apache-conf zabbix-agent
         \end{tcolorbox}
 
-    \subsection{Habilitar los puertos de escucha}
+    \subsubsection{Habilitar los puertos de escucha}
     Activamos el puerto 10050 ya que es el puerto por defecto del agente de forma permanente con el siguiente comando: 
         \begin{tcolorbox}[colback=black!10, halign=left]
             \# sudo firewall-cmd --add-port=10050/tcp --permanent
@@ -185,7 +185,7 @@
         \# sudo firewall-cmd --reload
     \end{tcolorbox}
     
-    \subsection{Configurar el fichero de agente}
+    \subsubsection{Configurar el fichero de agente}
     Editamos el fichero que se encuentra en \textbf{/etc/zabbix/zabbix\_agentd.conf} y cambiamos los parámetos \textbf{\emph{server}} y \textbf{\emph{serverActive}}
     con la IP del servidor que queremos que monitorice este sistema, en nuestro caso \textbf{192.168.56.105}. 
 
@@ -196,7 +196,7 @@
         \label{fig:centos_servers}
     \end{figure}    
 
-    \subsection{Configurar los servicios}
+    \subsubsection{Configurar los servicios}
     Reiniciamos los servicios \textbf{\emph{zabbix-server}}, \textbf{\emph{zabbix-agent}} y \textbf{\emph{apache2}} para que se actualicen los cambios realizados.
         \begin{tcolorbox}[colback=black!10, halign=left]
             \# sudo systemctl restart zabbix-server zabbix-agent httpd php-fpm
@@ -207,11 +207,11 @@
             \# sudo systemctl enable zabbix-server zabbix-agent httpd php-fpm
         \end{tcolorbox}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-% Apartado para la instalación en CentOS %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\section{Instalación del Front-End}
-    \subsection{Página de bienvenida de Zabbix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Apartado para la instalación del Front-End %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Instalación del Front-End}
+    \subsubsection{Página de bienvenida de Zabbix}
     Desde un navegador ingresamos en la dirección \textbf{192.168.56.105/zabbix}. Nos aparecerá una web de bienvenida con la varsión de Zabbix que estamos utilizando. 
     Pulsamos al botón \textbf{\emph{"Next Step"}} para continuar.
     \begin{figure}[H]
@@ -221,7 +221,7 @@
         \label{fig:zabbix_installation_1}
     \end{figure}
 
-    \subsection{Requisitos previos de Zabbix}
+    \subsubsection{Requisitos previos de Zabbix}
     En esta sección Zabbix nos muestra una lista de requisitos previos que deben de cumplirse para que todo funcione correctamente, si hubiera algún requisito que no se esté 
     cumpliendo habría que corregirlo. Una vez que verificamos que todos los requisitos se cumplen avanzamos al siguiente apartado pulsando en \textbf{\emph{"Next Step"}}.
     \begin{figure}[H]
@@ -231,7 +231,7 @@
         \label{fig:zabbix_installation_2}
     \end{figure}
 
-    \subsection{Conexión con la base de datos}
+    \subsubsection{Conexión con la base de datos}
     Configuramos la conexión con la base de datos MySQL, escribimos \textbf{\emph{ISE}} como contraseña.
     \begin{figure}[H]
         \centering
@@ -240,7 +240,7 @@
         \label{fig:zabbix_installation_3}
     \end{figure}
 
-    \subsection{Detalles del servidor}
+    \subsubsection{Detalles del servidor}
     Ingresamos el nombre del host y el puerto que vamos a utilizar.
     \begin{figure}[H]
         \centering
@@ -249,12 +249,114 @@
         \label{fig:zabbix_installation_4}
     \end{figure} 
 
-    \subsection{Instalación del Front-End}
+    \subsubsection{Instalación del Front-End}
     Comprobamos que todo está bien antes de instalar ya que no se podrá cambiar ningún parámetro.
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.25]{images/zabbix_installation_5.png}
         \caption{Instalación del Front-End}
         \label{fig:zabbix_installation_5}
-    \end{figure} 
+    \end{figure}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Apartado para la configuración de los hosts %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Configuración para la monitorización de los hosts}
+    \subsection{Web de gestión de Zabbix}
+    Desde un navegador a la \href{https://www.192.168.56.105/zabbix/index.php}{web de gestión de monitorización} y accedemos como usuario \textbf{\emph{Admin}} con contraseña \textbf{\emph{zabbix}}
+    para acceder como administrador para poder gestionar la monitorización.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.3]{images/zabbix_login.png}
+        \caption{Iniciar sesión en Zabbix}
+        \label{fig:zabbix_login}
+    \end{figure}
+
+    Una vez dentro, accedemos al apartado de hosts (desplegable ubicado a la izquierda) en configuración y pulsamos sobre \textbf{\emph{Create host}}.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.4]{images/zabbix_hosts.png}
+        \caption{Crear hosts}
+        \label{fig:zabbix_hosts}
+    \end{figure}
+
+    \subsection{Configuración del host Ubuntu Server}
+    \subsubsection{Apartado Host}
+    En este apartado definiremos el nombre con el que identificaremos la máquina con Ubuntu Server, los grupos a los que pertenece, la IP de la máquina y el puerto de escucha.
+    Rellenamos los campos anteriores de la siguiente forma:
+    \begin{itemize}
+        \item \textbf{Host name: } Ubuntu Server
+        \item \textbf{Groups: } Linux servers | Virtual machines | Zabbix servers
+        \item \textbf{IP address: } 192.168.56.105
+        \item \textbf{Port: } 10050
+    \end{itemize}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.35]{images/ubuntu_server_conf.png}
+        \caption{Configuración apartado host de Ubuntu Server}
+        \label{fig:ubuntu_server_conf}
+    \end{figure}
+    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+    
+    \subsubsection{Apartado Templates}
+    En el apartado templates añadimos los templates necesarios de forma que tenga enlazados los siguientes templates:
+    \begin{itemize}
+        \item \textbf{Template App HTTP Service: } para monitorizar el servicio HTTP
+        \item \textbf{Template App SSH Service: } para monitorizar el servicio SSH
+        \item \textbf{Template App Zabbix Server: } indicamos el servidor
+        \item \textbf{Template OS Linux by Zabbix agent: } indicamos el agente
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.425]{images/ubuntu_templates.png}
+        \caption{Configuración apartado templates de Ubuntu Server}
+        \label{fig:ubuntu_templates}
+    \end{figure}
+    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+
+    \subsection{Configuración del servicio SSH}
+    Como el puerto del SSH es distinto al puerto por defecto, debemos indicarle al servicio SSH que nuestro puerto de SSH es el 22022. Para
+    indicárselo pulsamos sobre el template \textbf{Template App SSH Service}, pulsamos sobre el apartado \textbf{Item} y por último,
+    pulsamos sobre el apartado \textbf{SSH servie is running}. Editamos el apartado \textbf{key} de la siguiente forma:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{images/ip_items.png}
+        \caption{Configuración SSH en Zabbix}
+        \label{fig:ip_items}
+    \end{figure}
+    \subsection{Configuración del host CentOS}
+    \subsubsection{Apartado Host}
+    En este apartado definiremos el nombre con el que identificaremos la máquina con CentOS, el grupo al que pertenece, la IP de la máquina y el puerto de escucha.
+    Rellenamos los campos anteriores de la siguiente forma:
+    \begin{itemize}
+        \item \textbf{Host name: } CentOS
+        \item \textbf{Groups: } Zabbix servers
+        \item \textbf{IP address: } 192.168.56.110
+        \item \textbf{Port: } 10050
+    \end{itemize}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.35]{images/centos_conf.png}
+        \caption{Configuración apartado host de CentOS}
+        \label{fig:centos_conf}
+    \end{figure}
+    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+    
+    \subsubsection{Apartado Templates}
+    En el apartado templates añadimos los templates necesarios de forma que tenga enlazados los siguientes templates:
+    \begin{itemize}
+        \item \textbf{Template App HTTP Service: } para monitorizar el servicio HTTP
+        \item \textbf{Template App SSH Service: } para monitorizar el servicio SSH
+        \item \textbf{Template App Zabbix Server: } indicamos el servidor
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.425]{images/centos_templates.png}
+        \caption{Configuración apartado templates de CentOS}
+        \label{fig:centos_templates}
+    \end{figure}
+    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+
 \end{document}
