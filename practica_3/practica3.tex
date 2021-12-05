@@ -44,7 +44,11 @@
 %     \label{fig:id}
 % \end{figure}
 
-\section{Ejercicio 1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Apartado para la instalación en Ubuntu Server %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Instalamos Zabbix en Ubuntu Server}
 \subsection{Descargar paquetes de Zabbix 5.0}
 
     Vamos a descargar los paquetes de Zabbix, para ello entramos en su web oficial, \href{https://www.zabbix.com/download}{Zabbix.com}, y 
@@ -108,7 +112,7 @@
         \end{tcolorbox}
 
     \subsection{Configurar la base de datos de Zabbix server}
-    Editamos el fichero que se encuentra en la siguiente ruta /etc/zabbix/zabbix\_server.conf, descomentamos el parámetro \textbf{\emph{DBPassword}} y le asignamos el valor
+    Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/zabbix\_server.conf}, descomentamos el parámetro \textbf{\emph{DBPassword}} y le asignamos el valor
     \textbf{\emph{ISE}}:
     \begin{figure}[H]
         \centering
@@ -118,7 +122,7 @@
     \end{figure}
 
     \subsection{Configurar el PHP del frontend de Zabbix}
-    Editamos el fichero que se encuentra en la siguiente ruta /etc/zabbix/apache.conf y modificamos el parámetro comentado \textbf{\emph{php\_value date.timezone}} reemplazando Riga
+    Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/apache.conf}y modificamos el parámetro comentado \textbf{\emph{php\_value date.timezone}} reemplazando Riga
     por Madrid para que se muestre la hora de forma correcta.
     \begin{figure}[H]
         \centering
@@ -128,7 +132,7 @@
     \end{figure}
 
     \subsection{Configurar los servicios}
-    Reiniciamos los servicios zabbix-server, zabbix-agent y apache2 para que se actualicen los cambios realizados.
+    Reiniciamos los servicios \textbf{\emph{zabbix-server}}, \textbf{\emph{zabbix-agent}} y \textbf{\emph{apache2}} para que se actualicen los cambios realizados.
         \begin{tcolorbox}[colback=black!10, halign=left]
             \$ sudo systemctl restart zabbix-server zabbix-agent apache2
         \end{tcolorbox}
@@ -138,6 +142,87 @@
             \$ sudo systemctl enable zabbix-server zabbix-agent apache2
         \end{tcolorbox}
 
-    \subsection{Configurar el frontend de Zabbix}
+    \subsection{Habilitar el puerto de escucha}
+    Habilitamos el puerto de escucha que usa por defecto Zabbix para que el firewall no lo bloquee.
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \$ sudo ufw allow 10051/tcp
+        \end{tcolorbox}
+
+    \subsection{Habilitar el puerto de escucha}
+    Editamos el fichero \textbf{/etc/zabbix/zabbix\_agentd.conf} cambiando las IP asignadas a las variables Server y ServerActive por la IP de la máquina que actuará de servidor
+    \textbf{(192.168.56.105)} y reiniciamos el servicio \textbf{\emph{zabbix-agent}} para que se apliquen los cambios.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.45]{images/ubuntu_servers.png}
+            \caption{Configuración Server y ServerActive}
+            \label{fig:ubuntu_servers}
+        \end{figure}
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \$ sudo systemctl restart zabbix-agent
+        \end{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Apartado para la instalación en CentOS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\newpage
+\section{Instalamos Zabbix en CentOS}
+    \subsection{Descargar paquetes de Zabbix 5.0}
+    Vamos a descargar los paquetes de Zabbix, para ello entramos en su web oficial, \href{https://www.zabbix.com/download}{Zabbix.com}, y 
+    seleccionamos los siguientes parámetros ya que son los que se ajustan a nuestras necesidades.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.3]{images/zabbix_centOS.png}
+        \caption{Descargar Zabbix desde paquetes}
+        \label{fig:zabbix_centOS}
+    \end{figure}
+
+    Lo primero que debemos hacer es descargar los paquetes correspondientes a Zabbix 5.0 desde su repositorio oficial con el comando \textbf{\emph{wget}}. 
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \# sudo rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/8/x86\_64/zabbix-release-5.0-1.el8.noarch.rpm
+        \end{tcolorbox}
+
+    Una vez descargado, limpiamos el directorio.
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \# sudo dnf clean all
+        \end{tcolorbox}
+
+    Por último, instalamos el servidor, la interfaz y el agente de Zabbix.
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \# dnf install zabbix-server-mysql zabbix-web-mysql zabbix-apache-conf zabbix-agent
+        \end{tcolorbox}
+
+    \subsection{Habilitar los puertos de escucha}
+    Activamos el puerto 10050 ya que es el puerto por defecto del agente de forma permanente con el siguiente comando: 
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \# sudo firewall-cmd --add-port=10050/tcp --permanent
+        \end{tcolorbox}
+
+    Una vez se ha habilitado, recargamos para que se active sin necesidad de reiniciar la máquina.
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \# sudo firewall-cmd --reload
+    \end{tcolorbox}
+    
+    \subsection{Configurar el fichero de agente}
+    Editamos el fichero que se encuentra en \textbf{/etc/zabbix/zabbix\_agentd.conf} y cambiamos los parámetos \textbf{\emph{server}} y \textbf{\emph{serverActive}}
+    con la IP del servidor que queremos que monitorice este sistema, en nuestro caso \textbf{192.168.56.105}. 
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.4]{images/centos_servers.png}
+        \caption{Configuración Server y ServerActive}
+        \label{fig:centos_servers}
+    \end{figure}    
+
+    \subsection{Configurar los servicios}
+    Reiniciamos los servicios \textbf{\emph{zabbix-server}}, \textbf{\emph{zabbix-agent}} y \textbf{\emph{apache2}} para que se actualicen los cambios realizados.
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \# sudo systemctl restart zabbix-server zabbix-agent httpd php-fpm
+        \end{tcolorbox}
+
+    Habilitamos los servicios anteriores para que se enciendan cuando arranque el sistema.
+        \begin{tcolorbox}[colback=black!10, halign=left]
+            \# sudo systemctl enable zabbix-server zabbix-agent httpd php-fpm
+        \end{tcolorbox}
+
 
 \end{document}
