@@ -26,29 +26,12 @@
 \listoffigures % para generar el índice de imágenes
 
 \newpage
-%----------------------------------------------------------------------------------------
-%	Cuestión 1
-%----------------------------------------------------------------------------------------
-
-% \section{Instalación de Zabbix}
-
-% \begin{tcolorbox}[colback=black!10, halign=left]
-% \$ sudo apt update
-% \\ \$ sudo apt update
-% \end{tcolorbox}
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[scale=0.75]{images/apache_conf.png}
-%     \caption{titulo de la foto}
-%     \label{fig:id}
-% \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % Apartado para la instalación en Ubuntu Server %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Instalamos Zabbix en Ubuntu Server}
+\section{Instalación de Zabbix en Ubuntu Server}
 \subsection{Descargar paquetes de Zabbix 5.0}
 
     Vamos a descargar los paquetes de Zabbix, para ello entramos en su web oficial, \href{https://www.zabbix.com/download}{Zabbix.com}, y 
@@ -165,7 +148,7 @@
 % Apartado para la instalación en CentOS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \newpage
-\section{Instalamos Zabbix en CentOS}
+\section{Instalación de Zabbix en CentOS}
     \subsection{Descargar paquetes de Zabbix 5.0}
     Vamos a descargar los paquetes de Zabbix, para ello entramos en su web oficial, \href{https://www.zabbix.com/download}{Zabbix.com}, y 
     seleccionamos los siguientes parámetros ya que son los que se ajustan a nuestras necesidades.
@@ -224,5 +207,54 @@
             \# sudo systemctl enable zabbix-server zabbix-agent httpd php-fpm
         \end{tcolorbox}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Apartado para la instalación en CentOS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{Instalación del Front-End}
+    \subsection{Página de bienvenida de Zabbix}
+    Desde un navegador ingresamos en la dirección \textbf{192.168.56.105/zabbix}. Nos aparecerá una web de bienvenida con la varsión de Zabbix que estamos utilizando. 
+    Pulsamos al botón \textbf{\emph{"Next Step"}} para continuar.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{images/zabbix_installation_1.png}
+        \caption{Página de bienvenida de Zabbix}
+        \label{fig:zabbix_installation_1}
+    \end{figure}
 
+    \subsection{Requisitos previos de Zabbix}
+    En esta sección Zabbix nos muestra una lista de requisitos previos que deben de cumplirse para que todo funcione correctamente, si hubiera algún requisito que no se esté 
+    cumpliendo habría que corregirlo. Una vez que verificamos que todos los requisitos se cumplen avanzamos al siguiente apartado pulsando en \textbf{\emph{"Next Step"}}.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{images/zabbix_installation_2.png}
+        \caption{Requisitos previos de Zabbix}
+        \label{fig:zabbix_installation_2}
+    \end{figure}
+
+    \subsection{Conexión con la base de datos}
+    Configuramos la conexión con la base de datos MySQL, escribimos \textbf{\emph{ISE}} como contraseña.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{images/zabbix_installation_3.png}
+        \caption{Conexión con la base de datos}
+        \label{fig:zabbix_installation_3}
+    \end{figure}
+
+    \subsection{Detalles del servidor}
+    Ingresamos el nombre del host y el puerto que vamos a utilizar.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{images/zabbix_installation_4.png}
+        \caption{Detalles del servidor}
+        \label{fig:zabbix_installation_4}
+    \end{figure} 
+
+    \subsection{Instalación del Front-End}
+    Comprobamos que todo está bien antes de instalar ya que no se podrá cambiar ningún parámetro.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{images/zabbix_installation_5.png}
+        \caption{Instalación del Front-End}
+        \label{fig:zabbix_installation_5}
+    \end{figure} 
 \end{document}
