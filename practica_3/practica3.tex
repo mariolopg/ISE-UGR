@@ -25,12 +25,10 @@
 \tableofcontents % para generar el índice de contenidos
 \listoffigures % para generar el índice de imágenes
 
-\newpage
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % Apartado para la instalación en Ubuntu Server %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\newpage
 \section{Instalación de Zabbix}
 \subsection{Instalación de Zabbix en Ubuntu Server}
 \subsubsection{Descargar paquetes de Zabbix 5.0}
@@ -262,6 +260,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Apartado para la monitorizacación de los hosts %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{Configuración para la monitorización de los hosts}
 \subsection{Web de gestión de Zabbix}
 Desde un navegador a la web de gestión de monitorización y accedemos como usuario \textbf{\emph{Admin}} con contraseña \textbf{\emph{zabbix}} para acceder como administrador
@@ -361,6 +360,7 @@ Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Apartado para la monitorizacación SSH y HTTP %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{Configuración para la monitorización de los servicios HTTP y SSH}
 Para la monitorización de ambas máquinas creamos una \textbf{\emph{Dashboard}} para cada máquina. Para ello nos vamos a \textbf{\emph{Monitoring}} y en \textbf{\emph{Dashboard}} le damos
 a crear nueva en el icono de las tres barras arriba a la derecha. Una vez hemos creado la \textbf{\emph{Dashboard}}, creamos los widgets que creamos convenientes pulsando sobre
@@ -376,7 +376,7 @@ a crear nueva en el icono de las tres barras arriba a la derecha. Una vez hemos 
 Tras crear unos cuantos widgets esta es la \textbf{\emph{Dashboard}} que ha quedado para la monitorización de Ubuntu Server.
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.3]{images/ubuntu_dashboard.png}
+        \includegraphics[scale=0.275]{images/ubuntu_dashboard.png}
         \caption{Dashboard de ubuntu}
         \label{fig:ubuntu_dashboard}
     \end{figure}
@@ -388,7 +388,9 @@ Para comprobar que la monitorización es correcta, apagamos el servicio ssh con 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Apartado para la configuracion de Ansible %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Instalación de Ansible en Ubuntu Server}
+\newpage
+\section{Instalación de Ansible}
+\subsection{Instalación de Ansible en Ubuntu Server}
 Ubuntu Server va a ser la máquina que monitorizará los RAID1 tanto de Ubuntu Server como de CentOS. Para llevar a cabo esta
 monitorización lo primero que debemos hacer es instalar ansible en Ubuntu Server.
 
@@ -403,11 +405,12 @@ el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} descomentamos la variabl
     \end{tcolorbox}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.525]{images/ansible_cfg.png}
+        \includegraphics[scale=0.75]{images/ansible_cfg.png}
         \caption{Archivo de configuración de Ansible}
         \label{fig:ansible_cfg}
     \end{figure}
 
+\subsection{Configuración de Ansible}
 Lo siguiente que tenemos que hacer es configurar el archivo donde Ansible lee las IP de las máquinas a las que les tiene que mandar las órdenes. Este archivo
 se encuentra en \textbf{/etc/ansible/hosts} y añadimos las IP’s de Ubuntu Server y CentOS.
     \begin{tcolorbox}[colback=black!10, halign=left]
@@ -415,11 +418,12 @@ se encuentra en \textbf{/etc/ansible/hosts} y añadimos las IP’s de Ubuntu Ser
     \end{tcolorbox}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.525]{images/ansible_hosts.png}
+        \includegraphics[scale=0.75]{images/ansible_hosts.png}
         \caption{Archivo de configuración de hosts de Ansible}
         \label{fig:ansible_hosts}
     \end{figure}
 
+\subsection{Configuración de las claves públicas y privadas}
 Ansible necesita tener acceso por SSH a las máquinas a las que va a mandar órdenes por lo tanto es necesario que estén habilitadas las claves públicas y
 privadas. Por lo tanto las habilitamos para ambas máquinas desde Ubuntu Server.
 
@@ -436,6 +440,7 @@ CentOS:
         \$ ssh-copy-id logom@192.168.56.110 -p 22022
     \end{tcolorbox}
 
+\subsection{Comprobación funcionamiento de Ansible}
 Comprobamos que todo funciona correctamente enviando un ping a todas las máquinas:
     \begin{tcolorbox}[colback=black!10, halign=left]
         \$ ansible all -m ping -u logom
