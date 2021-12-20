@@ -30,6 +30,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % Apartado para la instalación en Ubuntu Server %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Instalación de Zabbix}
 \subsection{Instalación de Zabbix en Ubuntu Server}
 \subsubsection{Descargar paquetes de Zabbix 5.0}
@@ -207,9 +208,9 @@
             \# sudo systemctl enable zabbix-server zabbix-agent httpd php-fpm
         \end{tcolorbox}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Apartado para la instalación del Front-End %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Apartado para la instalación en CentOS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection{Instalación del Front-End}
     \subsubsection{Página de bienvenida de Zabbix}
     Desde un navegador ingresamos en la dirección \textbf{192.168.56.105/zabbix}. Nos aparecerá una web de bienvenida con la varsión de Zabbix que estamos utilizando. 
@@ -257,22 +258,21 @@
         \caption{Instalación del Front-End}
         \label{fig:zabbix_installation_5}
     \end{figure}
-    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Apartado para la configuración de los hosts %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Apartado para la monitorizacación de los hosts %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Configuración para la monitorización de los hosts}
-    \subsection{Web de gestión de Zabbix}
-    Desde un navegador a la \href{https://www.192.168.56.105/zabbix/index.php}{web de gestión de monitorización} y accedemos como usuario \textbf{\emph{Admin}} con contraseña \textbf{\emph{zabbix}}
-    para acceder como administrador para poder gestionar la monitorización.
+\subsection{Web de gestión de Zabbix}
+Desde un navegador a la web de gestión de monitorización y accedemos como usuario \textbf{\emph{Admin}} con contraseña \textbf{\emph{zabbix}} para acceder como administrador para poder gestionar la monitorización.
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.3]{images/zabbix_login.png}
-        \caption{Iniciar sesión en Zabbix}
+        \includegraphics[scale=0.35]{images/zabbix_login.png}
+        \caption{Iniciar Sesión en Zabbix}
         \label{fig:zabbix_login}
     \end{figure}
 
-    Una vez dentro, accedemos al apartado de hosts (desplegable ubicado a la izquierda) en configuración y pulsamos sobre \textbf{\emph{Create host}}.
+Una vez dentro, accedemos al apartado de hosts (desplegable ubicado a la izquierda) en configuración y pulsamos sobre \textbf{\emph{Create host}}.
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.4]{images/zabbix_hosts.png}
@@ -280,83 +280,113 @@
         \label{fig:zabbix_hosts}
     \end{figure}
 
-    \subsection{Configuración del host Ubuntu Server}
-    \subsubsection{Apartado Host}
-    En este apartado definiremos el nombre con el que identificaremos la máquina con Ubuntu Server, los grupos a los que pertenece, la IP de la máquina y el puerto de escucha.
-    Rellenamos los campos anteriores de la siguiente forma:
+\subsection{Configuración del host Ubuntu Server}
+\subsubsection{Apartado Host}
+En este apartado definiremos el nombre con el que identificaremos la máquina con Ubuntu Server, los grupos a los que pertenece, la IP de la máquina y el puerto de escucha. Rellenamos los campos anteriores de la siguiente forma:
     \begin{itemize}
-        \item \textbf{Host name: } Ubuntu Server
-        \item \textbf{Groups: } Linux servers | Virtual machines | Zabbix servers
-        \item \textbf{IP address: } 192.168.56.105
-        \item \textbf{Port: } 10050
+        \item \textbf{Host name:} Ubuntu Server
+        \item \textbf{Groups:} Linux Servers | Virtual machines | Zabbix servers
+        \item \textbf{IP address:} 192.168.56.105
+        \item \textbf{Port:} 10050
     \end{itemize}
-    
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.35]{images/ubuntu_server_conf.png}
         \caption{Configuración apartado host de Ubuntu Server}
         \label{fig:ubuntu_server_conf}
     \end{figure}
-    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
-    
-    \subsubsection{Apartado Templates}
-    En el apartado templates añadimos los templates necesarios de forma que tenga enlazados los siguientes templates:
+Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+
+\subsubsection{Apartado Templates}
+En el apartado templates añadimos los templates necesarios de forma que tenga enlazados los siguientes templates:
     \begin{itemize}
-        \item \textbf{Template App HTTP Service: } para monitorizar el servicio HTTP
-        \item \textbf{Template App SSH Service: } para monitorizar el servicio SSH
-        \item \textbf{Template App Zabbix Server: } indicamos el servidor
-        \item \textbf{Template OS Linux by Zabbix agent: } indicamos el agente
+        \item \textbf{Template App Apache by HTTP:} para monitorizar el servicio HTTP
+        \item \textbf{Template App SSH Service:} para monitorizar el servicio SSH
+        \item \textbf{Template App Zabbix Server:} indicamos el servidor
+        \item \textbf{Template OS Linux by Zabbix agent:} indicamos el agente
     \end{itemize}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.425]{images/ubuntu_templates.png}
+        \includegraphics[scale=0.4225]{images/ubuntu_templates.png}
         \caption{Configuración apartado templates de Ubuntu Server}
         \label{fig:ubuntu_templates}
     \end{figure}
-    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
 
-    \subsection{Configuración del servicio SSH}
-    Como el puerto del SSH es distinto al puerto por defecto, debemos indicarle al servicio SSH que nuestro puerto de SSH es el 22022. Para
-    indicárselo pulsamos sobre el template \textbf{Template App SSH Service}, pulsamos sobre el apartado \textbf{Item} y por último,
-    pulsamos sobre el apartado \textbf{SSH servie is running}. Editamos el apartado \textbf{key} de la siguiente forma:
+\subsection{Configuración del servicio SSH}
+Como el puerto del SSH es distinto al puerto por defecto, debemos indicarle al servicio SSH que nuestro puerto de SSH es el 22022. Para cambiar el puerto por defecto pulsamos sobre el template \textbf{Template App SSH Service}, pulsamos sobre el apartado \textbf{Item} y por último, pulsamos sobre el apartado \textbf{SSH service is running}. Editamos el apartado \textbf{key} de la siguiente forma:
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.5]{images/ip_items.png}
         \caption{Configuración SSH en Zabbix}
         \label{fig:ip_items}
     \end{figure}
-    \subsection{Configuración del host CentOS}
-    \subsubsection{Apartado Host}
-    En este apartado definiremos el nombre con el que identificaremos la máquina con CentOS, el grupo al que pertenece, la IP de la máquina y el puerto de escucha.
-    Rellenamos los campos anteriores de la siguiente forma:
+\subsection{Configuración del host CentOS}
+\subsubsection{Apartado Host}
+En este apartado definiremos el nombre con el que identificaremos la máquina con CentOS, el grupo al que pertenece, la IP de la máquina y el puerto de escucha. Rellenamos los campos anteriores de la siguiente forma:
     \begin{itemize}
-        \item \textbf{Host name: } CentOS
-        \item \textbf{Groups: } Zabbix servers
-        \item \textbf{IP address: } 192.168.56.110
-        \item \textbf{Port: } 10050
+        \item \textbf{Host name:} CentOS
+        \item \textbf{Groups:} Zabbix Servers
+        \item \textbf{IP address:} 192.168.56.110
+        \item \textbf{Port:} 10050
     \end{itemize}
-    
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.35]{images/centos_conf.png}
         \caption{Configuración apartado host de CentOS}
         \label{fig:centos_conf}
     \end{figure}
-    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
-    
-    \subsubsection{Apartado Templates}
-    En el apartado templates añadimos los templates necesarios de forma que tenga enlazados los siguientes templates:
+Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+
+\subsubsection{Apartado Templates}
+En el apartado Templates añadimos los templates necesarios de forma que tenga enlazados los siguientes templates:
     \begin{itemize}
-        \item \textbf{Template App HTTP Service: } para monitorizar el servicio HTTP
-        \item \textbf{Template App SSH Service: } para monitorizar el servicio SSH
-        \item \textbf{Template App Zabbix Server: } indicamos el servidor
+        \item \textbf{Template App Apache by HTTP:} para monitorizar el servicio HTTP
+        \item \textbf{Template App SSH Service:} para monitorizar el servicio SSH
+        \item \textbf{Template App Zabbix Server:} indicamos el servidor
     \end{itemize}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.425]{images/centos_templates.png}
+        \includegraphics[scale=0.45]{images/centos_templates.png}
         \caption{Configuración apartado templates de CentOS}
         \label{fig:centos_templates}
     \end{figure}
-    Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
+Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Apartado para la monitorizacación SSH y HTTP %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Configuración para la monitorización de los servicios HTTP y SSH}
+Para la monitorización de ambas máquinas creamos una \textbf{\emph{Dashboard}} para cada máquina. Para ello nos vamos a \textbf{\emph{Monitoring}} y en \textbf{\emph{Dashboard}} le damos a crear nueva en el icono de las tres barras arriba a la derecha. Una vez hemos creado la \textbf{\emph{Dashboard}}, creamos los widgets que creamos convenientes pulsando sobre \textbf{\emph{Add widget}}. Crearé un reloj como ejemplo:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.3]{images/widget.png}
+        \caption{Creación de un widget}
+        \label{fig:widget}
+    \end{figure}
+
+\subsection{Monitorización en Ubuntu Server}
+Tras crear unos cuantos widgets esta es la \textbf{\emph{Dashboard}} que ha quedado para la monitorización de Ubuntu Server.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.25]{images/ubuntu_dashboard.png}
+        \caption{Dashboard de ubuntu}
+        \label{fig:ubuntu_dashboard}
+    \end{figure}
+Para comprobar que la monitorización es correcta, apagamos el servicio ssh con el siguiente comando:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo systemctl stop ssh
+\end{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Apartado para la configuracion de Ansible %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Instalación de Ansible en Ubuntu Server}
+Ubuntu Server va a ser la máquina que monitorizará los RAID1 tanto de Ubuntu Server como de CentOS. Para llevar a cabo esta monitorización lo primero que debemos hacer es instalar ansible en Ubuntu Server.
+
+Instalamos ansible con el siguiente comando:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo apt install ansible
+\end{tcolorbox}
+Una vez se ha instalado, cambiamos el puerto por el que accede al servicio SSH ya que lo cambiamos al 22022. Para ello editamos el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} descomentamos la variable \textbf{\emph{remote\_ports}} y le asignamos el valor \textbf{\emph{22022}}.
 \end{document}
