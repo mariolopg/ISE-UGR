@@ -96,8 +96,8 @@
         \end{tcolorbox}
 
     \subsubsection{Configurar la base de datos de Zabbix server}
-    Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/zabbix\_server.conf}, descomentamos el parámetro \textbf{\emph{DBPassword}} y le asignamos el valor
-    \textbf{\emph{ISE}}:
+    Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/zabbix\_server.conf}, descomentamos el parámetro \textbf{\emph{DBPassword}} y le
+    asignamos el valor \textbf{\emph{ISE}}:
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.4]{images/zabbix_server_conf.png}
@@ -106,8 +106,8 @@
     \end{figure}
 
     \subsubsection{Configurar el PHP del frontend de Zabbix}
-    Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/apache.conf}y modificamos el parámetro comentado \textbf{\emph{php\_value date.timezone}} reemplazando Riga
-    por Madrid para que se muestre la hora de forma correcta.
+    Editamos el fichero que se encuentra en la ruta \textbf{/etc/zabbix/apache.conf}y modificamos el parámetro comentado \textbf{\emph{php\_value date.timezone}}
+    reemplazando Riga por Madrid para que se muestre la hora de forma correcta.
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.5]{images/apache_conf.png}
@@ -133,8 +133,8 @@
         \end{tcolorbox}
 
     \subsubsection{Habilitar el puerto de escucha}
-    Editamos el fichero \textbf{/etc/zabbix/zabbix\_agentd.conf} cambiando las IP asignadas a las variables Server y ServerActive por la IP de la máquina que actuará de servidor
-    \textbf{(192.168.56.105)} y reiniciamos el servicio \textbf{\emph{zabbix-agent}} para que se apliquen los cambios.
+    Editamos el fichero \textbf{/etc/zabbix/zabbix\_agentd.conf} cambiando las IP asignadas a las variables Server y ServerActive por la IP de la máquina que actuará
+    de servidor \textbf{(192.168.56.105)} y reiniciamos el servicio \textbf{\emph{zabbix-agent}} para que se apliquen los cambios.
         \begin{figure}[H]
             \centering
             \includegraphics[scale=0.45]{images/ubuntu_servers.png}
@@ -264,7 +264,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Configuración para la monitorización de los hosts}
 \subsection{Web de gestión de Zabbix}
-Desde un navegador a la web de gestión de monitorización y accedemos como usuario \textbf{\emph{Admin}} con contraseña \textbf{\emph{zabbix}} para acceder como administrador para poder gestionar la monitorización.
+Desde un navegador a la web de gestión de monitorización y accedemos como usuario \textbf{\emph{Admin}} con contraseña \textbf{\emph{zabbix}} para acceder como administrador
+para poder gestionar la monitorización.
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.35]{images/zabbix_login.png}
@@ -282,7 +283,8 @@ Una vez dentro, accedemos al apartado de hosts (desplegable ubicado a la izquier
 
 \subsection{Configuración del host Ubuntu Server}
 \subsubsection{Apartado Host}
-En este apartado definiremos el nombre con el que identificaremos la máquina con Ubuntu Server, los grupos a los que pertenece, la IP de la máquina y el puerto de escucha. Rellenamos los campos anteriores de la siguiente forma:
+En este apartado definiremos el nombre con el que identificaremos la máquina con Ubuntu Server, los grupos a los que pertenece, la IP de la máquina y el puerto de escucha.
+Rellenamos los campos anteriores de la siguiente forma:
     \begin{itemize}
         \item \textbf{Host name:} Ubuntu Server
         \item \textbf{Groups:} Linux Servers | Virtual machines | Zabbix servers
@@ -314,7 +316,9 @@ En el apartado templates añadimos los templates necesarios de forma que tenga e
 Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \textbf{\emph{Update}} para que se actualicen los campos.
 
 \subsection{Configuración del servicio SSH}
-Como el puerto del SSH es distinto al puerto por defecto, debemos indicarle al servicio SSH que nuestro puerto de SSH es el 22022. Para cambiar el puerto por defecto pulsamos sobre el template \textbf{Template App SSH Service}, pulsamos sobre el apartado \textbf{Item} y por último, pulsamos sobre el apartado \textbf{SSH service is running}. Editamos el apartado \textbf{key} de la siguiente forma:
+Como el puerto del SSH es distinto al puerto por defecto, debemos indicarle al servicio SSH que nuestro puerto de SSH es el 22022. Para cambiar el puerto por defecto pulsamos
+sobre el template \textbf{Template App SSH Service}, pulsamos sobre el apartado \textbf{Item} y por último, pulsamos sobre el apartado \textbf{SSH service is running}. Editamos
+el apartado \textbf{key} de la siguiente forma:
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.5]{images/ip_items.png}
@@ -323,7 +327,8 @@ Como el puerto del SSH es distinto al puerto por defecto, debemos indicarle al s
     \end{figure}
 \subsection{Configuración del host CentOS}
 \subsubsection{Apartado Host}
-En este apartado definiremos el nombre con el que identificaremos la máquina con CentOS, el grupo al que pertenece, la IP de la máquina y el puerto de escucha. Rellenamos los campos anteriores de la siguiente forma:
+En este apartado definiremos el nombre con el que identificaremos la máquina con CentOS, el grupo al que pertenece, la IP de la máquina y el puerto de escucha. Rellenamos los campos
+anteriores de la siguiente forma:
     \begin{itemize}
         \item \textbf{Host name:} CentOS
         \item \textbf{Groups:} Zabbix Servers
@@ -357,7 +362,9 @@ Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \t
 % Apartado para la monitorizacación SSH y HTTP %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Configuración para la monitorización de los servicios HTTP y SSH}
-Para la monitorización de ambas máquinas creamos una \textbf{\emph{Dashboard}} para cada máquina. Para ello nos vamos a \textbf{\emph{Monitoring}} y en \textbf{\emph{Dashboard}} le damos a crear nueva en el icono de las tres barras arriba a la derecha. Una vez hemos creado la \textbf{\emph{Dashboard}}, creamos los widgets que creamos convenientes pulsando sobre \textbf{\emph{Add widget}}. Crearé un reloj como ejemplo:
+Para la monitorización de ambas máquinas creamos una \textbf{\emph{Dashboard}} para cada máquina. Para ello nos vamos a \textbf{\emph{Monitoring}} y en \textbf{\emph{Dashboard}} le damos
+a crear nueva en el icono de las tres barras arriba a la derecha. Una vez hemos creado la \textbf{\emph{Dashboard}}, creamos los widgets que creamos convenientes pulsando sobre
+\textbf{\emph{Add widget}}. Crearé un reloj como ejemplo:
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.3]{images/widget.png}
@@ -369,7 +376,7 @@ Para la monitorización de ambas máquinas creamos una \textbf{\emph{Dashboard}}
 Tras crear unos cuantos widgets esta es la \textbf{\emph{Dashboard}} que ha quedado para la monitorización de Ubuntu Server.
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.25]{images/ubuntu_dashboard.png}
+        \includegraphics[scale=0.3]{images/ubuntu_dashboard.png}
         \caption{Dashboard de ubuntu}
         \label{fig:ubuntu_dashboard}
     \end{figure}
@@ -382,11 +389,64 @@ Para comprobar que la monitorización es correcta, apagamos el servicio ssh con 
 % Apartado para la configuracion de Ansible %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Instalación de Ansible en Ubuntu Server}
-Ubuntu Server va a ser la máquina que monitorizará los RAID1 tanto de Ubuntu Server como de CentOS. Para llevar a cabo esta monitorización lo primero que debemos hacer es instalar ansible en Ubuntu Server.
+Ubuntu Server va a ser la máquina que monitorizará los RAID1 tanto de Ubuntu Server como de CentOS. Para llevar a cabo esta
+monitorización lo primero que debemos hacer es instalar ansible en Ubuntu Server.
 
 Instalamos ansible con el siguiente comando:
 \begin{tcolorbox}[colback=black!10, halign=left]
     \$ sudo apt install ansible
 \end{tcolorbox}
-Una vez se ha instalado, cambiamos el puerto por el que accede al servicio SSH ya que lo cambiamos al 22022. Para ello editamos el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} descomentamos la variable \textbf{\emph{remote\_ports}} y le asignamos el valor \textbf{\emph{22022}}.
+Una vez se ha instalado, cambiamos el puerto por el que accede al servicio SSH ya que lo cambiamos al 22022. Para ello editamos
+el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} descomentamos la variable \textbf{\emph{remote\_ports}} y le asignamos el valor \textbf{\emph{22022}}.
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ sudo vi /etc/ansible/ansible.cfg
+    \end{tcolorbox}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.525]{images/ansible_cfg.png}
+        \caption{Archivo de configuración de Ansible}
+        \label{fig:ansible_cfg}
+    \end{figure}
+
+Lo siguiente que tenemos que hacer es configurar el archivo donde Ansible lee las IP de las máquinas a las que les tiene que mandar las órdenes. Este archivo
+se encuentra en \textbf{/etc/ansible/hosts} y añadimos las IP’s de Ubuntu Server y CentOS.
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ sudo vi /etc/ansible/hosts
+    \end{tcolorbox}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.525]{images/ansible_hosts.png}
+        \caption{Archivo de configuración de hosts de Ansible}
+        \label{fig:ansible_hosts}
+    \end{figure}
+
+Ansible necesita tener acceso por SSH a las máquinas a las que va a mandar órdenes por lo tanto es necesario que estén habilitadas las claves públicas y
+privadas. Por lo tanto las habilitamos para ambas máquinas desde Ubuntu Server.
+
+Ubuntu Server:
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ ssh-keygen
+    \end{tcolorbox}
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ ssh-copy-id logom@192.168.56.105 -p 22022
+    \end{tcolorbox}
+
+CentOS:
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ ssh-copy-id logom@192.168.56.110 -p 22022
+    \end{tcolorbox}
+
+Comprobamos que todo funciona correctamente enviando un ping a todas las máquinas:
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ ansible all -m ping -u logom
+    \end{tcolorbox}
+
+Si todo funciona correctamente debe aparecer una imagen similar a esta:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.7]{images/ansible_ping.png}
+        \caption{Ping correcto con Ansible}
+        \label{fig:ansible_ping}
+    \end{figure}
+
 \end{document}
