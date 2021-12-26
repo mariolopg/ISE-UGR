@@ -487,7 +487,7 @@ Una vez tenemos copiado el script, lo enviamos a las máquinas que no lo tengan,
 
 Comprobamos que se haya enviado bien a CentOS y que tiene el mismo contenido. Si todo está bien procedemos a ejecutar el script en todas las máquinas:
     \begin{tcolorbox}[colback=black!10, halign=left]
-        \$ ansible all -a "python3 ~/mon\_raid.py" -u logom
+        \begin{verbatim}$ ansible all -a "python3 ~/mon_raid.py" -u logom \end{verbatim}
     \end{tcolorbox}
 
 Tras la ejecución del script, muestra para cada máquina a la que se lanzan órdenes si los RAIDS son correctos. En mi caso muestra que en CentOS está
