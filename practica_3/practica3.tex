@@ -20,6 +20,12 @@
 
 \maketitle % Muestra el Título
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.175]{images/server.jpg}
+    \label{fig:server}
+\end{figure}
+
 \newpage %inserta un salto de página
 
 \tableofcontents % para generar el índice de contenidos
@@ -380,10 +386,16 @@ Tras crear unos cuantos widgets esta es la \textbf{\emph{Dashboard}} que ha qued
         \caption{Dashboard de ubuntu}
         \label{fig:ubuntu_dashboard}
     \end{figure}
-Para comprobar que la monitorización es correcta, apagamos el servicio ssh con el siguiente comando:
-\begin{tcolorbox}[colback=black!10, halign=left]
-    \$ sudo systemctl stop ssh
-\end{tcolorbox}
+
+\subsection{Monitorización en CentOS}
+Creamos la misma \textbf{\emph{Dashboard}} que hemos usado para la monitorización de Ubuntu Server. He apagado el servicio SSHD en CentOS para comprobar
+que funciona bien la monitorización.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.275]{images/centOS_dashboard.png}
+        \caption{Dashboard de centOS}
+        \label{fig:centOS_dashboard}
+    \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Apartado para la configuracion de Ansible %
@@ -449,9 +461,78 @@ Comprobamos que todo funciona correctamente enviando un ping a todas las máquin
 Si todo funciona correctamente debe aparecer una imagen similar a esta:
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.7]{images/ansible_ping.png}
+        \includegraphics[scale=0.5]{images/ansible_ping.png}
         \caption{Ping correcto con Ansible}
         \label{fig:ansible_ping}
     \end{figure}
+
+Una vez sabemos que todo funciona correctamente, procedemos a crear un script básico de monitorización con Python. Lo creamos en nuestra carpeta de usuario.
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ vi mon\_raid.py
+    \end{tcolorbox}
+
+\subsection{Script de monitorización}
+El código del script será el siguiente:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{images/mon_raid.png}
+        \caption{Script de monitorización de Ansible}
+        \label{fig:mon_raid}
+    \end{figure}
+
+Una vez tenemos copiado el script, lo enviamos a las máquinas que no lo tengan, en mi caso CentOS, con el siguiente comando:
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ scp -P 22022 mon\_raid.py logom@192.168.56.110:/home/logom/mon\_raid.py
+    \end{tcolorbox}
+
+Comprobamos que se haya enviado bien a CentOS y que tiene el mismo contenido. Si todo está bien procedemos a ejecutar el script en todas las máquinas:
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ ansible all -a "python3 ~/mon\_raid.py" -u logom
+    \end{tcolorbox}
+
+Tras la ejecución del script, muestra para cada máquina a la que se lanzan órdenes si los RAIDS son correctos. En mi caso muestra que en CentOS está
+todo correcto y en Ubuntu indica que en ambos RAIDS hay algún error.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.7]{images/ejecucion_script.png}
+        \caption{Ejecución del script de monitorización de Ansible}
+        \label{fig:ejecucion_script}
+    \end{figure}
+
+\subsection{Playbook}
+Los playbooks son ficheros YAML. Crearemos un playbook para hacer un ping a las máquinas. Para ello creamos un archivo
+yml como el de la siguiente imagen.
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ vi playbook.yml
+    \end{tcolorbox}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{images/playbook.png}
+        \caption{Playbook para hacer ping}
+        \label{fig:playbook}
+    \end{figure}
+
+Una vez hemos creado el playbook lo ejecutamos.
+    \begin{tcolorbox}[colback=black!10, halign=left]
+        \$ ansible-playbook playbook.yml
+    \end{tcolorbox}
+
+Una vez lo hayamos ejecutado, debería salir en la terminal algo similar a la siguiente imagen.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.45]{images/ejecucion_playbook.png}
+        \caption{Ejecución del playbook}
+        \label{fig:ejecucion_playbook}
+    \end{figure}
+
+\begin{thebibliography}{0}
+    
+    \bibitem{} \href{https://www.zabbix.com/download?}{Zabbix download}
+    \bibitem{} \href{https://www.zabbix.com/documentation/5.0/manual/installation/frontend}{Zabbix frontend installation}
+    \bibitem{} \href{https://www.zabbix.com/documentation/5.4/en/manual/web_interface/frontend_sections/monitoring/dashboard/widgets}{Zabbix dashboard widgets}
+    \bibitem{} \href{https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04-es}{How to install and configure ansible}
+    \bibitem{} \href{https://www.youtube.com/watch?v=Wuv0ZPOMLf0}{How to do ansible playbooks}
+\end{thebibliography}
 
 \end{document}
