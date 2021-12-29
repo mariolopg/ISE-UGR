@@ -79,7 +79,7 @@
         \begin{tcolorbox}[colback=black!10, halign=left]
             \$ sudo mysql -u root -p
 
-            \emph{Ingresamos la contraseña para ingresar en la base de datos (ISE)}
+            \emph{Ingresamos la contraseña que tendrá en la base de datos (ISE)}
         \end{tcolorbox}
 
     Una vez dentro del asistente ejecutamos los siguientes comandos en PostgreSQL:
@@ -368,8 +368,8 @@ Una vez hemos rellenado los campos descritos anteriormente pulsamos el botón \t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \section{Configuración para la monitorización de los servicios HTTP y SSH}
-Para la monitorización de ambas máquinas creamos una \textbf{\emph{Dashboard}} para cada máquina. Para ello nos vamos a \textbf{\emph{Monitoring}} y en \textbf{\emph{Dashboard}} le damos
-a crear nueva en el icono de las tres barras arriba a la derecha. Una vez hemos creado la \textbf{\emph{Dashboard}}, creamos los widgets que creamos convenientes pulsando sobre
+Para la monitorización de ambas máquinas vamos a crear una \textbf{\emph{Dashboard}} para cada máquina. Para ello nos vamos a \textbf{\emph{Monitoring}} y en \textbf{\emph{Dashboard}} pulsamos sobre
+crear nueva, en el icono de las tres barras arriba a la derecha. Una vez hemos creado la \textbf{\emph{Dashboard}}, creamos los widgets que creamos convenientes pulsando sobre
 \textbf{\emph{Add widget}}. Crearé un reloj como ejemplo:
     \begin{figure}[H]
         \centering
@@ -411,7 +411,7 @@ Instalamos ansible con el siguiente comando:
     \$ sudo apt install ansible
 \end{tcolorbox}
 Una vez se ha instalado, cambiamos el puerto por el que accede al servicio SSH ya que lo cambiamos al 22022. Para ello editamos
-el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} descomentamos la variable \textbf{\emph{remote\_ports}} y le asignamos el valor \textbf{\emph{22022}}.
+el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} y descomentamos la variable \textbf{\emph{remote\_ports}} y le asignamos el valor \textbf{\emph{22022}}.
     \begin{tcolorbox}[colback=black!10, halign=left]
         \$ sudo vi /etc/ansible/ansible.cfg
     \end{tcolorbox}
@@ -423,7 +423,7 @@ el archivo ubicado en \textbf{/etc/ansible/ansible.cfg} descomentamos la variabl
     \end{figure}
 
 \subsection{Configuración de Ansible}
-Lo siguiente que tenemos que hacer es configurar el archivo donde Ansible lee las IP de las máquinas a las que les tiene que mandar las órdenes. Este archivo
+Lo siguiente que tenemos que hacer es configurar el archivo donde Ansible lee las IPs de las máquinas a las que les tiene que mandar las órdenes. Este archivo
 se encuentra en \textbf{/etc/ansible/hosts} y añadimos las IP’s de Ubuntu Server y CentOS.
     \begin{tcolorbox}[colback=black!10, halign=left]
         \$ sudo vi /etc/ansible/hosts
@@ -437,7 +437,7 @@ se encuentra en \textbf{/etc/ansible/hosts} y añadimos las IP’s de Ubuntu Ser
 
 \subsection{Configuración de las claves públicas y privadas}
 Ansible necesita tener acceso por SSH a las máquinas a las que va a mandar órdenes por lo tanto es necesario que estén habilitadas las claves públicas y
-privadas. Por lo tanto las habilitamos para ambas máquinas desde Ubuntu Server.
+privadas. Para habiliar las claves para ambas máquinas desde Ubuntu Server ejecutamos lo siguiente:.
 
 Ubuntu Server:
     \begin{tcolorbox}[colback=black!10, halign=left]
@@ -480,7 +480,7 @@ El código del script será el siguiente:
         \label{fig:mon_raid}
     \end{figure}
 
-Una vez tenemos copiado el script, lo enviamos a las máquinas que no lo tengan, en mi caso CentOS, con el siguiente comando:
+Una vez tenemos copiado el script lo enviamos a las máquinas que no lo tengan, en mi caso CentOS, con el siguiente comando:
     \begin{tcolorbox}[colback=black!10, halign=left]
         \$ scp -P 22022 mon\_raid.py logom@192.168.56.110:/home/logom/mon\_raid.py
     \end{tcolorbox}
@@ -518,7 +518,7 @@ Una vez hemos creado el playbook lo ejecutamos.
         \$ ansible-playbook playbook.yml
     \end{tcolorbox}
 
-Una vez lo hayamos ejecutado, debería salir en la terminal algo similar a la siguiente imagen.
+Una vez lo hayamos ejecutado debería salir en la terminal algo similar a la siguiente imagen:
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.45]{images/ejecucion_playbook.png}
