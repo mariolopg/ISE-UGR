@@ -140,6 +140,67 @@ Como se puede observar en las imágenes anteriores, se han realizado el mismo n�
 coeficientes de variación y su correspondiente comparativa, concluyo en que los resultados obtenidos en el test de Ubuntu son más fiables por lo que tomaré su
 tiempo como valor de referencia.
 
+\section{JMeter}
+\subsection{Instalación de Docker}
+Para este ejercicio es necesario instalar docker y docker-compose. A continuación mostraré los pasos para su instalación en Ubuntu Server:
+
+Lo primero que tenemos que hacer es añadir la llave GPG para validar el repositorio de Docker que agregaremos posteriormente:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+\end{tcolorbox}
+
+Acto seguido añadimos el repositorio con el siguiente comando (todo en la misma línea):
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu \$(lsb\_release -cs) stable"
+\end{tcolorbox}
+
+Una vez añadido el repositorio procedemos a actualizar la lista de repos y a instalar docker-ce (community edition):
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo apt update \\
+    \$ sudo apt install docker-ce
+\end{tcolorbox}
+
+Por último, instalamos docker-compose y comprobamos que se ha instalado:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo apt install docker-compose \\
+    \$ docker-compose --version
+\end{tcolorbox}
+
+\subsection{Instalación de iseP4JMeter}
+Descargamos la aplicación del repositorio proporcionado:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ git clone https://github.com/davidPalomar-ugr/iseP4JMeter.git
+\end{tcolorbox}
+
+Una vez se ha descargado accedemos a la carpeta y levantamos la imagen de docker:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo docker-compose up
+\end{tcolorbox}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{images/docker_compose.png}
+    \caption{docker-compose up}
+    \label{fig:docker_compose}
+\end{figure}
+
+Por último, detenemos el contenedor y habilitamos el puerto 3000 ya que en el repositorio especifica que es el puerto usado por la aplicación y el que utiliza la base
+de datos MongoDB:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ sudo ufw allow 3000/tcp \\
+    \$ sudo ufw allow 27017/tcp
+\end{tcolorbox}
+
+Volvemos a levantar el servicio e ingresamos en la siguiente dirección para comprobar que la aplicación funciona:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    192.168.56.110:3000
+\end{tcolorbox}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.33]{images/iseP4JMeter.png}
+    \caption{Aplicación web}
+    \label{fig:iseP4JMeter}
+\end{figure}
+
 \begin{thebibliography}{0}
     \bibitem{} \href{}{}
 \end{thebibliography}
