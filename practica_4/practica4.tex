@@ -201,6 +201,146 @@ Volvemos a levantar el servicio e ingresamos en la siguiente dirección para com
     \label{fig:iseP4JMeter}
 \end{figure}
 
+\subsection{Instalación de JMeter (MacOS)}
+En mi caso instalo JMeter en mi sistema nativo, MacOS, haciendo uso del gestor de paquetes \emph{brew}:
+\begin{tcolorbox}[colback=black!10, halign=left]
+    \$ brew install jmeter
+\end{tcolorbox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.33]{images/jmeter.png}
+    \caption{JMeter}
+    \label{fig:jmeter}
+\end{figure}
+
+\subsection{Plan de JMeter}
+Crearemos un test que simule las peticiones al servidor por parte de los usuarios que accedan a la web. Para crear dicha prueba cambiaremos el nombre del plan que aparece
+por defecto a "ETSIIT Alumnos API". En él definiremos dos variables para parametrizar la IP del servidor y el puerto:
+\begin{itemize}
+    \item \textbf{host:} 192.168.56.105
+    \item \textbf{port:} 3000
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{images/variables.png}
+    \caption{Parametrización de variables}
+    \label{fig:variables}
+\end{figure}
+
+\subsubsection{HTTP Authorization Manager - Basic-Auth Api}
+Este elemento, creado dentro del plan, contiene la URL de la aplicación web junto con sus credenciales necesarias para el acceso ya que está protegido. Por lo tanto,
+crearemos una autorización para la dirección de la API con su respectivo usuario y contraseña:
+\begin{itemize}
+    \item \textbf{Base URL:} http://\${host}:\${port}/api/v1/auth/login
+    \item \textbf{Username:} etsiiApi
+    \item \textbf{Password:} laApiDeLaETSIIDaLache
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{images/autorizacion.png}
+    \caption{Autorización}
+    \label{fig:autorizacion}
+\end{figure}
+
+\subsubsection{Grupo de hebras - Alumno}
+Crearemos un grupo de hebras dentro del plan de tal forma que estas que actuarán como alumnos. La configuramos de la siguiente manera:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.35]{images/hebras_alumnos.png}
+    \caption{Grupo de hebras de alumnos}
+    \label{fig:hebras_alumnos}
+\end{figure}
+
+\subsubsection{CSV Data Set Config - Credenciales Alumno}
+Para automatizar el proceso de ''usuarios'' $ $ que acceden a la página web utilizaremos el archivo ''alumnos.csv'' $ $ que contiene los nombres de usuario y contraseñas
+que tienen acceso a la web. Para ello, crearemos un elemento ''CSV Data Set Config'' $ $ que configuraremos de la siguiente forma:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.33]{images/csv_alumnos.png}
+    \caption{Datos CSV de alumnos}
+    \label{fig:csv_alumnos}
+\end{figure}
+
+\subsubsection{HTTP Request - Login Alumno}
+Crearemos una petición HTTP para que las hebras del grupo soliciten acceso como usuarios, para ello creamos un elemento "HTTP Request" $ $ dentro del grupo de hebras:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.33]{images/login_alumnos.png}
+    \caption{Petición HTTP Alumnos}
+    \label{fig:login_alumnos}
+\end{figure}
+
+\subsubsection{Regular Expression Extractor - Extract JWT Token}
+Añadiremos un extractor de expresiones regulares para guardar las credenciales de alumno usadas para la petición HTTP en la variable \emph{token}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{images/token_alumnos.png}
+    \caption{Extractor de Tokens para alumnos}
+    \label{fig:token_alumnos}
+\end{figure}
+
+\subsubsection{Espera aleatoria}
+Para simular las gestiones del usuario añadiremos una espera aleatoria con el elemento "Gaussian Random Timer".
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{images/timer.png}
+    \caption{Temporizador aleatorio gaussiano}
+    \label{fig:timer}
+\end{figure}
+
+\subsubsection{HTTP Request - Recuperar Datos Alumno}
+Añadiremos una nueva petición HTTP para consultar los datos de acceso del alumno:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.33]{images/recuperar_alumnos.png}
+    \caption{Petición HTTP para recuperar los datos de los alumnos}
+    \label{fig:recuperar_alumnos}
+\end{figure}
+
+\subsubsection{HTTP Header Manager - JWT Token}
+Para que las cabeceras de las peticiones HTTP contengan las credenciales de los alumnos debemos añadir un elemento ''HTTP Header Manager'': 
+\begin{figure}[H]
+    \centering  
+    \includegraphics[scale=0.33]{images/header_alumnos.png}
+    \caption{Gestor de cabeceras HTTP para alumnos}
+    \label{fig:header_alumnos}
+\end{figure}
+
+\subsubsection{Grupo de hebras - Administrador}
+Para simular el acceso de administradores añadiremos un nuevo grupo de hebras dentro del plan, al nivel del grupo de hebras de alumnos, de la siguiente forma
+que añadimos el de alumnos.
+
+\subsubsection{CSV Data Set Config - Credenciales Administrador}
+Para leer las credenciales de los administradores crearemos un elemento ''CSV Data Set Config'' idéntico al usado en ''Credenciales Alumno'' con la diferencia de 
+que el archivo usado esta vez es ''administradores.csv''.
+
+\subsubsection{HTTP Request - Login Administrador}
+Del mismo modo que con ''Login Alumno'', creamos una petición HTTP para las hebras soliciten acceso como administradores. 
+
+\subsubsection{Regular Expression Extractor - Extract JWT Token}
+Añadiremos un extractor de expresiones regulares para guardar las credenciales del administrador usadas para la petición HTTP en la variable \emph{token}:
+
+\subsubsection{Access Log Sampler - Accesos Administradores}
+Añadiremos un elemento ''Access Log Sampler'' para realizar un muestreo y simular el acceso de los administradores.
+\begin{figure}[H]
+    \centering  
+    \includegraphics[scale=0.33]{images/access_administrador.png}
+    \caption{Access Log Sampler para administradores}
+    \label{fig:access_administrador}
+\end{figure}
+
+\subsubsection{HTTP Header Manager - JWT Token}
+Para que las cabeceras de las peticiones HTTP contengan las credenciales de los administradores debemos añadir un elemento ''HTTP Header Manager'' tal y como hemos hecho para el
+grupo de hebras de alumnos.
+
+\subsubsection{Espera aleatoria}
+Para simular las gestiones del usuario añadiremos una espera aleatoria con el elemento "Gaussian Random Timer".
+
+\newpage
+
 \begin{thebibliography}{0}
     \bibitem{} \href{}{}
 \end{thebibliography}
